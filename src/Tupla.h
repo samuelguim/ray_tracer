@@ -6,10 +6,9 @@ private:
     /* data */
 public:
 
-    float x;
-    float y;
-    float z;
-    float w;
+    float x, y, z, w;
+    
+    Tupla(){}
 
     Tupla(float _x, float _y, float _z, float _w){
         x = _x;
@@ -18,11 +17,11 @@ public:
         w = _w;
     };
 
-    Tupla Ponto(float _x, float _y, float _z){
+    static Tupla Ponto(float _x, float _y, float _z){
         return Tupla(_x, _y, _z, 1);
     }
 
-    Tupla Vetor(float _x, float _y, float _z){
+    static Tupla Vetor(float _x, float _y, float _z){
         return Tupla(_x, _y, _z, 0);
     }
 
@@ -40,7 +39,7 @@ public:
         return Tupla(a.x - b.x, a.y - b.y, a.z - b.z, a.w - b.w);
     }
 
-    Tupla opAdd(Tupla a, Tupla b){
+    static Tupla opAdd(Tupla a, Tupla b){
         return Tupla(a.x + b.x, a.y + b.y, a.z + b.z, a.w + b.w);
     }
 
@@ -56,11 +55,11 @@ public:
         return Tupla(a.x/escalar, a.y/escalar, a.z/escalar, a.w/escalar);
     }
 
-    float magnitude(Tupla v){
+    static float magnitude(Tupla v){
         return sqrt((v.x*v.x)+(v.y*v.y)+(v.z*v.z)+(v.w*v.w));
     }
 
-    Tupla norma(Tupla v){
+    static Tupla norma(Tupla v){  
         return Tupla(v.x/magnitude(v),
                      v.y/magnitude(v),
                      v.z/magnitude(v),
@@ -79,9 +78,6 @@ public:
                      a.z*b.x-a.x*b.z,
                      a.x*b.y-a.y*b.x);
     }
-
-    
-
 };
 
 
