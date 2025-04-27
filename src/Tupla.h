@@ -1,4 +1,6 @@
 #include <cmath>
+#include <iostream>
+#include <iostream>
 
 class Tupla
 {
@@ -8,6 +10,10 @@ public:
 
     float x, y, z, w;
     
+    static void print(Tupla a){
+        std::cout << "(" << a.x << ", " << a.y << ", " << a.z << ", " << a.w <<  ")\n";
+    }
+
     Tupla(){}
 
     Tupla(float _x, float _y, float _z, float _w){
@@ -25,36 +31,67 @@ public:
         return Tupla(_x, _y, _z, 0);
     }
 
-    bool isVec(Tupla tupla){
+    static bool isVec(Tupla tupla){
         return (tupla.w == 1);
     }
 
-    bool isPoint(Tupla tupla){
+    static bool isPoint(Tupla tupla){
         return (tupla.w == 0);
     }
 
     // operações
 
-    Tupla opSub(Tupla a, Tupla b){
-        return Tupla(a.x - b.x, a.y - b.y, a.z - b.z, a.w - b.w);
+    Tupla operator-(const Tupla& b) const {
+        Tupla resultado = *this;
+        resultado.x -= b.x;
+        resultado.y -= b.y;
+        resultado.z -= b.z;
+        resultado.w -= b.w;
+        return resultado;
     }
 
-    static Tupla opAdd(Tupla a, Tupla b){
-        return Tupla(a.x + b.x, a.y + b.y, a.z + b.z, a.w + b.w);
+    Tupla operator+(const Tupla& b) const {
+        Tupla resultado = *this;
+        resultado.x += b.x;
+        resultado.y += b.y;
+        resultado.z += b.z;
+        resultado.w += b.w;
+        return resultado;
     }
 
-    Tupla negar(Tupla a){
-        return Tupla(-a.x, -a.y, -a.z, -a.w);
+    Tupla operator!(){
+        Tupla resultado = *this;
+        return Tupla(-resultado.x, -resultado.y, -resultado.z, -resultado.w);
     }
 
-    Tupla multEscalar(Tupla a, float escalar){
-        return Tupla(a.x*escalar, a.y*escalar, a.z*escalar, a.w*escalar);
+    Tupla operator*(const float& escalar) const {
+        Tupla resultado = *this;
+        resultado.x = resultado.x * escalar;
+        resultado.y = resultado.y * escalar;
+        resultado.z = resultado.z * escalar;
+        resultado.w = resultado.w * escalar;
+        return resultado;
     }
 
-    Tupla divEscalar(Tupla a, float escalar){
-        return Tupla(a.x/escalar, a.y/escalar, a.z/escalar, a.w/escalar);
+    float operator*(const Tupla& b) const {
+        Tupla a = *this;
+        float resultado;
+        resultado = (a.x*b.x + 
+                     a.y*b.y +
+                     a.z*b.z +
+                     a.w*b.w);
+        return resultado;
     }
 
+    Tupla operator/(const float& escalar) const {
+        Tupla resultado = *this;
+        resultado.x = resultado.x / escalar;
+        resultado.y = resultado.y / escalar;
+        resultado.z = resultado.z / escalar;
+        resultado.w = resultado.w / escalar;
+        return resultado;
+    }
+    
     static float magnitude(Tupla v){
         return sqrt((v.x*v.x)+(v.y*v.y)+(v.z*v.z)+(v.w*v.w));
     }
@@ -66,14 +103,8 @@ public:
                      v.w/magnitude(v));
     }
 
-    float prodEscalar(Tupla a, Tupla b){
-        return (a.x*b.x + 
-                a.y*b.y +
-                a.z*b.z +
-                a.w*b.w);
-    }
 
-    Tupla prodVet(Tupla a, Tupla b) {
+    static Tupla prodVet(Tupla a, Tupla b) {
         return Vetor(a.y*b.z-a.z*b.y,
                      a.z*b.x-a.x*b.z,
                      a.x*b.y-a.y*b.x);
