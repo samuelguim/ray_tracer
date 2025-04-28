@@ -29,18 +29,20 @@ Projetil tick(Ambiente a, Projetil p){
 }
 
 int main(){
-    Quadro c = Quadro(900,550);
-    Cor c1 = Cor(0, 0, 1);
+    Quadro c = Quadro(900,1000);
+    Cor c1 = Cor(0, 1, 1);
 
-
-    Projetil p1 = Projetil(Tupla::Ponto(0,1,0), Tupla::norma(Tupla::Vetor(1,1.8,0))*11.25);
+    Projetil p1 = Projetil(Tupla::Ponto(0,1,0), Tupla::norma(Tupla::Vetor(2,1.8,0))*11.25);
     Ambiente a1 = Ambiente(Tupla::Vetor(0,-0.1,0), Tupla::Vetor(-0.01,0,0));
 
-    while (p1.posicao.y>=0){
+    while (tick(a1, p1).posicao.y>=0){
         p1 = tick(a1, p1);
-        c.writePixel(p1.posicao.x, 200, c1);
+        c.writePixel(p1.posicao.x, p1.posicao.y, c1);
         Tupla::print(p1.posicao);
     }
+
+    //p1 = tick(a1, p1);
+    //c.writePixel(p1.posicao.x, 3, c1);
 
     c.salvarQuadro();
 

@@ -13,15 +13,15 @@ public:
     Quadro(int w, int h){
         largura = w;
         altura = h;
-        pixels.resize(w, vector<Cor>(h));
+        pixels.resize(h, vector<Cor>(w));
     }
 
-    Cor getPixel(int w, int h){
-        return pixels[w][h];
+    Cor getPixel(int x, int y){
+        return pixels[y][x];
     }
 
-    void writePixel(int w, int h, Cor c){
-        pixels[w][h] = c;
+    void writePixel(int x, int y, Cor c){
+        pixels[y][x] = c;
     }
 
     int escalaCor(float cor){
@@ -40,12 +40,9 @@ public:
     void salvarQuadro(){
         ofstream arquivo("render.ppm");
         arquivo << "P3" << "\n" << largura << " " << altura << "\n" << 255 << "\n";
-        for(int i = 0; i < largura; i++){
-            for (int j = 0; j < altura; j++){
+        for(int i = altura-1; i>=0; i--){
+            for (int j = 0; j < largura; j++){
                 arquivo << escalaCor(pixels[i][j].red()) << " " << escalaCor(pixels[i][j].green()) << " " << escalaCor(pixels[i][j].blue()) << " ";
-                // if (j % 5 == 0){
-                //     arquivo << "\n";
-                // }
             }
             arquivo << "\n";
         }
